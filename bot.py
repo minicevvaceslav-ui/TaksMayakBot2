@@ -18,7 +18,8 @@ bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot)
 
 # --- Константы ---
-LINK_DRIVER = "https://forms.fleet.yandex.ru/forms?specification=taxi&ref_id=b21aa999243246e0ae39d1e7885f784a"
+# Ссылка для паркового водителя больше не нужна
+# LINK_DRIVER = "https://forms.fleet.yandex.ru/forms?specification=taxi&ref_id=b21aa999243246e0ae39d1e7885f784a"
 LINK_SELF_EMPLOYED = "https://forms.fleet.yandex.ru/forms?specification=taxi&ref_id=a0f9f5e2e0484f569640ea686f1b813e"
 LINK_IP = "https://forms.fleet.yandex.ru/forms?specification=taxi&ref_id=f3c3a48428224cfc9bdc30a6534c24d1"
 
@@ -41,23 +42,21 @@ WELCOME_TEXT = (
 )
 
 # --- Клавиатура (синтаксис для v2) ---
-btn_driver = KeyboardButton("Подключиться как парковый водитель")
+# Убрали кнопку "Подключиться как парковый водитель"
 btn_self = KeyboardButton("Подключиться как парковый самозанятый")
 btn_ip = KeyboardButton("Подключиться как парковый ИП")
 btn_help = KeyboardButton("Помощь в оформлении самозанятости")
 btn_manager = KeyboardButton("Связаться с менеджером")
 
-main_kb = ReplyKeyboardMarkup(resize_keyboard=True).add(btn_driver).add(btn_self).add(btn_ip).add(btn_help).add(btn_manager)
+# Убрали кнопку из самой клавиатуры
+main_kb = ReplyKeyboardMarkup(resize_keyboard=True).add(btn_self).add(btn_ip).add(btn_help).add(btn_manager)
 
 # --- Обработчики команд (синтаксис для v2) ---
 @dp.message_handler(commands=['start', 'help'])
 async def cmd_start(message: types.Message):
     await message.answer(WELCOME_TEXT, reply_markup=main_kb)
 
-@dp.message_handler(lambda message: message.text == "Подключиться как парковый водитель")
-async def handle_driver(message: types.Message):
-    await message.answer("Отлично! Чтобы подключиться, заполните анкету по ссылке:", reply_markup=ReplyKeyboardRemove())
-    await message.answer(LINK_DRIVER, disable_web_page_preview=True)
+# Убрали обработчик для кнопки "Подключиться как парковый водитель"
 
 @dp.message_handler(lambda message: message.text == "Подключиться как парковый самозанятый")
 async def handle_self_employed(message: types.Message):
@@ -79,6 +78,6 @@ async def contact_manager(message: types.Message):
     await message.answer(f"Вы можете связаться с нами по номеру:\n{MANAGER_CONTACT}")
 
 # --- Запуск бота (синтаксис для v2) ---
-if __name__ == "__main__":
+if name == "__main__":
     logging.info("Бот запускается (v2 compatible)...")
     executor.start_polling(dp, skip_updates=True)
