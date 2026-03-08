@@ -78,6 +78,6 @@ async def contact_manager(message: types.Message):
     await message.answer(f"Вы можете связаться с нами по номеру:\n{MANAGER_CONTACT}")
 
 # --- Запуск бота (синтаксис для v2) ---
-if name == "__main__":
+if __name__ == "__main__":
     logging.info("Бот запускается (v2 compatible)...")
     executor.start_polling(dp, skip_updates=True)
